@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Happy 16th Birthday, Ifemide!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@400;600;700&family=Dancing+Script:wght@400;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #fce4ec);
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            padding: 10px;
+            margin: 0;
+        }
+
+        .calendar-container {
+            width: 100%;
+            max-width: 1200px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 247, 250, 0.8)), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="2" cy="2" r="1" fill="rgba(65,105,225,0.2)"/></svg>');
+            padding: 10px;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            border: 5px solid #4169E1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(90deg, #4169E1, #ff69b4);
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border: 3px solid #ffd700;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before, .header::after {
+            content: '✨';
+            position: absolute;
+            font-size: 24px;
+            color: #ffd700;
+        }
+        .header::before { top: 5px; left: 5px; }
+        .header::after { bottom: 5px; right: 5px; }
+
+        h1 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            margin: 8px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .message {
+            font-size: clamp(0.8rem, 1.2vw, 1rem);
+            line-height: 1.6;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px;
+            border-radius: 8px;
+        }
+
+        .image-gallery {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .image-placeholder {
+            width: clamp(40px, 6vw, 60px);
+            height: clamp(40px, 6vw, 60px);
+            background-color: #f0f0f0;
+            border: 3px solid #ffd700;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: clamp(8px, 1vw, 10px);
+            color: #666;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden; /* Ensure the image doesn't overflow */
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        .image-placeholder:hover {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+        }
+
+        .image-placeholder::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 20px;
+            color: #ff69b4;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            padding: 5px;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        .month {
+            background: #fff;
+            border: 2px solid #4169E1;
+            border-radius: 10px;
+            padding: 5px;
+            text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .month:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .month::before, .month::after {
+            content: '🌸';
+            position: absolute;
+            font-size: 15px;
+            color: #ff69b4;
+            opacity: 0.5;
+        }
+        .month::before { top: 3px; left: 3px; }
+        .month::after { bottom: 3px; right: 3px; }
+
+        .month.january {
+            background: linear-gradient(135deg, #4169E1, #e3f2fd), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0h20v2H0z" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        .month.february {
+            background: linear-gradient(135deg, #ff69b4, #f8bbd0), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.2)"/></svg>');
+        }
+        .month.march {
+            background: linear-gradient(135deg, #66bb6a, #c8e6c9), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0l20 20M20 0L0 20" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+        }
+        .month.april {
+            background: linear-gradient(135deg, #ff5722, #4169E1), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M10 0c-5 5 5 5 0 10s-5-5 0-10z" fill="rgba(255,255,255,0.2)"/></svg>');
+            border: 3px solid #ffd700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            position: relative;
+        }
+        .month.april::before {
+            content: '🎉 Birthday Month 🎉';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff5722;
+            color: white;
+            font-size: 8px;
+            padding: 2px 6px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .month.may {
+            background: linear-gradient(135deg, #fff176, #4169E1), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0h2v20H0z" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        .month.june {
+            background: linear-gradient(135deg, #4dd0e1, #b2ebf2), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0l20 20M20 0L0 20" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+        }
+        .month.july {
+            background: linear-gradient(135deg, #ff8a65, #ffccbc), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.2)"/></svg>');
+        }
+        .month.august {
+            background: linear-gradient(135deg, #a1887f, #d7ccc8), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0h20v2H0z" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        .month.september {
+            background: linear-gradient(135deg, #aed581, #dcedc8), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0l20 20M20 0L0 20" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+        }
+        .month.october {
+            background: linear-gradient(135deg, #ffca28, #4169E1), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.2)"/></svg>');
+        }
+        .month.november {
+            background: linear-gradient(135deg, #90a4ae, #b0bec5), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0h2v20H0z" fill="rgba(255,255,255,0.1)"/></svg>');
+        }
+        .month.december {
+            background: linear-gradient(135deg, #4fc3f7, #b3e5fc), url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><path d="M0 0l20 20M20 0L0 20" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></svg>');
+        }
+
+        .month h3 {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(0.8rem, 1.5vw, 1rem);
+            margin: 3px 0;
+            color: #fff;
+            font-weight: 700;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+        }
+
+        .month.april h3 {
+            color: #ffd700;
+            font-size: clamp(0.9rem, 2vw, 1.2rem);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 1px;
+            flex-grow: 1;
+        }
+
+        .day {
+            font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+            padding: 2px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 1px solid #ddd;
+            border-radius: 2px;
+            transition: background 0.3s ease;
+        }
+
+        .day-header {
+            font-weight: bold;
+            background-color: rgba(224, 224, 224, 0.9);
+            font-size: clamp(0.5rem, 0.8vw, 0.7rem);
+        }
+
+        .day.weekend {
+            background-color: rgba(255, 235, 59, 0.3);
+            border: 1px solid #ffb300;
+            position: relative;
+        }
+        .day.weekend::after {
+            content: '🌟';
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            font-size: 8px;
+            opacity: 0.7;
+        }
+
+        .birthday {
+            background: linear-gradient(45deg, #ff5722, #4169E1);
+            color: white;
+            font-weight: bold;
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            box-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+            animation: glow 1.5s infinite;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+            50% { box-shadow: 0 0 15px rgba(255, 215, 0, 1); }
+            100% { box-shadow: 0 0 8px rgba(255, 215, 0, 0.5); }
+        }
+
+        .birthday::before {
+            content: '🎂';
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            font-size: 10px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        .birthday::after {
+            content: '16th!';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 6px;
+            color: #ff69b4;
+            background: white;
+            padding: 1px 3px;
+            border-radius: 3px;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .decoration {
+            position: absolute;
+            font-size: clamp(15px, 3vw, 25px);
+            color: rgba(255, 215, 0, 0.6);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .decoration:hover {
+            transform: scale(1.2);
+        }
+
+        .top-left { top: 10px; left: 10px; }
+        .top-right { top: 10px; right: 10px; }
+        .bottom-left { bottom: 10px; left: 10px; }
+        .bottom-right { bottom: 10px; right: 10px; }
+
+        .download-btn {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            background: #ff69b4;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            font-size: clamp(8px, 1vw, 10px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s ease;
+            z-index: 1000;
+        }
+
+        .download-btn:hover {
+            background: #4169E1;
+        }
+
+        @media (max-width: 1024px) {
+            .calendar-container {
+                padding: 8px;
+                min-height: 85vh;
+            }
+            .month {
+                padding: 4px;
+                min-height: 100px;
+            }
+            .day, .day-header {
+                font-size: 0.6rem;
+                padding: 2px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .calendar-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .calendar-container {
+                padding: 6px;
+                min-height: 80vh;
+            }
+            .month {
+                padding: 3px;
+                min-height: 120px;
+            }
+            .day, .day-header {
+                font-size: 0.5rem;
+                padding: 1px;
+            }
+            .image-gallery {
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar-grid {
+                grid-template-columns: 1fr;
+            }
+            .calendar-container {
+                padding: 4px;
+                min-height: 75vh;
+            }
+            .month {
+                padding: 2px;
+                min-height: 140px;
+            }
+            .day, .day-header {
+                font-size: 0.4rem;
+                padding: 1px;
+            }
+            .image-gallery {
+                gap: 5px;
+            }
+        }
+
+        @media print {
+            body { padding: 0; }
+            .calendar-container {
+                width: 210mm;
+                height: 297mm;
+                box-shadow: none;
+            }
+            .month:hover, .image-placeholder:hover, .decoration:hover { transform: none; }
+            .download-btn { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar-container">
+        <div class="header">
+            <h1>Happy 16th Birthday, Ifemide! 🎈</h1>
+            <h1>April 4, 2025</h1>
+            <p class="message">
+                To my dearest Adekintan Aderinsola Aishat Ayomide Ajihun Ayinke, <br>
+                Turning 16 is a magical milestone, and I’m beyond proud of you! May this year <br>
+                bring you endless joy, love, and success in all you do. You’re my shining star, <br>
+                Ifemide, and I love you more than words can say! 💙 <br>
+                - Your Bestie Forever
+            </p>
+        </div>
+        <div class="image-gallery">
+            <div class="image-placeholder"><img src="best.jpg" alt="Bestie" width="500" height="50" onerror="this.style.display='none';"></div>
+            <div class="image-placeholder"><img src="ife.jpg" alt="Ifemide" width="500" height="500" onerror="this.style.display='none';"></div>
+        </div>
+        <div class="calendar-grid" id="calendar-grid"></div>
+        <div class="decoration top-left">🎁</div>
+        <div class="decoration top-right">🎉</div>
+        <div class="decoration bottom-left">🎂</div>
+        <div class="decoration bottom-right">🎈</div>
+    </div>
+    <button class="download-btn" onclick="window.print()">Download as PDF</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const calendarGrid = document.getElementById("calendar-grid");
+            const daysOfWeek = ["S", "M", "T", "W", "T", "F", "S"];
+            const months = [
+                "January", "February", "March", "April", "May", "June",
+                "July", "August", "September", "October", "November", "December"
+            ];
+            const daysInMonth = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+            const year = 2025;
+            const birthdayMonth = 3; // April (0-based)
+            const birthdayDay = 4;
+
+            if (year % 4 === 0 && (year % 100 !== 0 || year % 400 === 0)) {
+                daysInMonth[1] = 29;
+            }
+
+            months.forEach((monthName, monthIndex) => {
+                const monthDiv = document.createElement("div");
+                monthDiv.classList.add("month");
+                monthDiv.classList.add(monthName.toLowerCase());
+
+                const monthTitle = document.createElement("h3");
+                monthTitle.textContent = monthName;
+                monthDiv.appendChild(monthTitle);
+
+                const daysDiv = document.createElement("div");
+                daysDiv.classList.add("days");
+
+                daysOfWeek.forEach((day, index) => {
+                    const dayElement = document.createElement("div");
+                    dayElement.classList.add("day", "day-header");
+                    if (index === 0 || index === 6) {
+                        dayElement.classList.add("weekend");
+                    }
+                    dayElement.textContent = day;
+                    daysDiv.appendChild(dayElement);
+                });
+
+                const firstDay = new Date(year, monthIndex, 1).getDay();
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyDay = document.createElement("div");
+                    emptyDay.classList.add("day");
+                    if (i === 0 || i === 6) {
+                        emptyDay.classList.add("weekend");
+                    }
+                    daysDiv.appendChild(emptyDay);
+                }
+
+                for (let day = 1; day <= daysInMonth[monthIndex]; day++) {
+                    const dayElement = document.createElement("div");
+                    dayElement.classList.add("day");
+                    const dayOfWeek = (firstDay + day - 1) % 7;
+                    if (dayOfWeek === 0 || dayOfWeek === 6) {
+                        dayElement.classList.add("weekend");
+                    }
+                    if (monthIndex === birthdayMonth && day === birthdayDay) {
+                        dayElement.classList.add("birthday");
+                    }
+                    dayElement.textContent = day;
+                    daysDiv.appendChild(dayElement);
+                }
+
+                monthDiv.appendChild(daysDiv);
+                calendarGrid.appendChild(monthDiv);
+            });
+
+            window.scrollTo(0, 0);
+        });
+    </script>
+</body>
+</html>
